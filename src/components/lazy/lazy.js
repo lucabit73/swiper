@@ -144,7 +144,23 @@ const Lazy = {
       swiper.lazy.loadInSlide(activeIndex);
     }
     if (params.loadPrevNext) {
-      if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
+      if (params.customLoadPrevNextAmount && params.customLoadPrevNextAmount > 0) {
+        const amount = params.customLoadPrevNextAmount;
+        const spv = slidesPerView;
+        const maxIndex = Math.min(activeIndex + Math.ceil(spv) + amount, slides.length);
+        const minIndex = Math.max(activeIndex - amount, 0);
+        // Next Slides
+        for (let i = activeIndex + Math.ceil(slidesPerView); i < maxIndex; i += 1) {
+          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        }
+        // Prev Slides
+        for (let i = minIndex; i < activeIndex; i += 1) {
+          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        }
+      } else if (
+        slidesPerView > 1 ||
+        (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)
+      ) {
         const amount = params.loadPrevNextAmount;
         const spv = slidesPerView;
         const maxIndex = Math.min(
@@ -222,6 +238,7 @@ export default {
       enabled: false,
       loadPrevNext: false,
       loadPrevNextAmount: 1,
+      customLoadPrevNextAmount: 0,
       loadOnTransitionStart: false,
       scrollingElement: '',
 

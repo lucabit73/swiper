@@ -50,6 +50,12 @@ export interface LazyOptions {
    * */
   loadPrevNextAmount?: number;
   /**
+   * Amount of next/prev slides to preload lazy images in. Can be less than `slidesPerView` and override loadPrevNextAmount
+   *
+   * @default 0
+   * */
+  customLoadPrevNextAmount?: number;
+  /**
    * By default, Swiper will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
    *
    * @default false
